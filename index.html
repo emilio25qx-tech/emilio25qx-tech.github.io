@@ -3,210 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Portfolio | My Work</title>
+    <title>Jinjariya Portfolio | Game Design</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --color-void: #0a0a0f;
-            --color-shadow: #1a1a24;
-            --color-bone: #e8e4dc;
-            --color-blood: #8b1538;
-            --color-mist: #4a4a5a;
+            --color-void: #0a0a0f; --color-shadow: #16161f; --color-bone: #e8e4dc;
+            --color-blood: #8b1538; --color-mist: #4a4a5a;
+        }
+        
+        body { 
+            background: var(--color-void) url('assets/dark_grunge_texture.jpg') fixed center/cover; 
+            font-family: 'Crimson Text', serif; color: var(--color-bone); margin: 0; overflow-x: hidden; 
         }
 
-        body {
-            font-family: 'Crimson Text', serif;
-            background: var(--color-void);
-            color: var(--color-bone);
-            margin: 0;
-            overflow-x: hidden;
+        /* Eerie Vignette Shadow around the whole page */
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, transparent 50%, rgba(5,5,8,0.9) 100%);
+            pointer-events: none; z-index: 50;
         }
 
         .font-display { font-family: 'Cinzel', serif; }
 
-        /* Eerie fog effect */
-        .fog-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(74, 74, 90, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(74, 74, 90, 0.1) 0%, transparent 40%);
-            animation: fogDrift 20s ease-in-out infinite;
+        /* Navigation Bar */
+        nav {
+            z-index: 999; 
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(139, 21, 56, 0.2);
         }
 
-        @keyframes fogDrift {
-            0%, 100% { opacity: 0.7; transform: translateX(0); }
-            50% { opacity: 1; transform: translateX(-20px); }
+        /* Eerie Glitch Animation - ON HOVER ONLY */
+        .glitch-text { position: relative; display: inline-block; color: var(--color-bone); cursor: pointer; }
+        .glitch-text::before, .glitch-text::after { 
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.2s;
+        }
+        /* Blood Red and Ghost White Glitch */
+        .glitch-text:hover::before { 
+            opacity: 1; left: 3px; text-shadow: -2px 0 var(--color-blood); clip: rect(44px, 450px, 56px, 0); animation: glitch 0.3s infinite linear alternate-reverse; 
+        }
+        .glitch-text:hover::after { 
+            opacity: 1; left: -3px; text-shadow: 2px 0 rgba(255,255,255,0.4); animation: glitch 0.2s infinite linear alternate-reverse; 
+        }
+        @keyframes glitch { 
+            0% { clip: rect(31px, 9999px, 94px, 0); transform: skew(1deg); } 
+            20% { clip: rect(10px, 9999px, 50px, 0); transform: skew(-1deg); } 
+            100% { clip: rect(67px, 9999px, 62px, 0); transform: skew(0deg); } 
         }
 
-        /* Flickering effect */
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            92% { opacity: 1; } 93% { opacity: 0.8; } 94% { opacity: 1; }
+        /* Sleek Project Cards */
+        .project-card { 
+            background: rgba(10, 10, 15, 0.7); border: 1px solid rgba(74, 74, 90, 0.3); 
+            transition: all 0.5s ease; cursor: pointer; position: relative;
+            backdrop-filter: blur(5px);
         }
-        .flicker { animation: flicker 8s infinite; }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.8); border-color: rgba(139, 21, 56, 0.6); }
+        .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); opacity: 0; transition: 0.3s; }
+        .project-card:hover .play-overlay { opacity: 1; }
 
-        /* Project Card Hover */
-        .project-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--color-shadow);
-            border: 1px solid rgba(74, 74, 90, 0.3);
-        }
-        .project-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(139, 21, 56, 0.2);
-        }
-
-        /* Reveal on Scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Glitch effect */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-        }
-        .glitch:hover { animation: glitch 0.3s infinite; }
+        /* Modal Layout */
+        #modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(10px); align-items: center; justify-content: center; padding: 1rem; }
+        .modal-content { background: #0a0a0f; color: var(--color-bone); border: 1px solid var(--color-blood); max-width: 1200px; width: 100%; max-height: 95vh; overflow-y: auto; position: relative; box-shadow: 0 0 50px rgba(139, 21, 56, 0.1); }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body class="h-full">
-    <div class="fog-layer"></div>
 
-    <div class="relative z-10 w-full h-full overflow-auto">
-        <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 backdrop-blur-md bg-[#0a0a0f]/80">
-            <div class="max-w-6xl mx-auto flex justify-between items-center">
-                <div class="font-display text-lg tracking-widest glitch text-[#8b1538]">⛧ JINJARIYA SONGPRAKHON</div>
-                <div class="flex gap-8">
-                    <a href="#work" class="text-sm uppercase text-[#4a4a5a] hover:text-white transition-colors">Work</a>
-                    <a href="#about" class="text-sm uppercase text-[#4a4a5a] hover:text-white transition-colors">About</a>
-                    <a href="#contact" class="text-sm uppercase text-[#4a4a5a] hover:text-white transition-colors">Contact</a>
-                </div>
+    <nav class="fixed top-0 left-0 right-0 px-6 py-5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center relative z-10">
+            <div class="font-display text-xl tracking-[0.2em] text-[#8b1538] glitch-text" data-text="⛧ JINJARIYA SONGPRAKHON">⛧ JINJARIYA SONGPRAKHON</div>
+            <div class="flex gap-12 text-sm uppercase tracking-[0.2em] text-[#e8e4dc]/70 hidden md:flex">
+                <a href="#work" class="hover:text-white transition-colors">Work</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <section class="min-h-screen flex items-center justify-center px-6 text-center">
-            <div>
-                <div class="mb-4 text-sm tracking-[0.3em] uppercase text-[#4a4a5a]">Welcome to the void</div>
-                <h1 class="font-display text-5xl md:text-8xl tracking-wider mb-6 flicker text-[#e8e4dc]">PORTFOLIO</h1>
-                <p class="text-xl italic mb-12 text-[#4a4a5a]">Game Designer & 3D Modeler</p>
-                <a href="#work" class="inline-block px-8 py-3 border border-[#8b1538] text-[#8b1538] font-display text-sm tracking-wider uppercase hover:bg-[#8b1538] hover:text-white transition-all">
-                    Enter the Gallery
-                </a>
-            </div>
-        </section>
+    <header class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative z-10">
+        <div class="reveal">
+            <h1 class="font-display text-6xl md:text-[9rem] uppercase tracking-wider glitch-text" data-text="PORTFOLIO">PORTFOLIO</h1>
+            <p class="text-white/40 uppercase tracking-[0.6em] mt-8 text-sm opacity-60">Game Designer / 3D Modeler / 2026</p>
+        </div>
+    </header>
 
-        <section id="work" class="py-32 px-6 max-w-6xl mx-auto">
-            <h2 class="text-center font-display text-4xl mb-20 reveal flicker tracking-[0.2em]">GAME DESIGN</h2>
+    <section id="work" class="py-32 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="font-display text-4xl text-center mb-24 tracking-[0.4em] text-[#e8e4dc]">GAME DESIGN</h2>
+        <div class="grid md:grid-cols-2 gap-12">
             
-            <div class="grid md:grid-cols-2 gap-12">
-                
-                <div class="project-card reveal p-8 border" style="background: #16161f; border-color: rgba(74, 74, 90, 0.2);">
-                    <div class="aspect-video mb-8 flex items-center justify-center relative overflow-hidden" style="background: #0d0d12;">
-                        <div class="w-6 h-6 border-2 border-[#8b1538] rotate-45"></div>
+            <div class="project-card reveal p-8" 
+                 onclick="openModal('ONE CANDLE AWAY', 'A psychological horror experience built in Unity. You must manage your light source to survive the depths.', 'https://youtu.be/oDwy1c3ev6Y', ['assets/side_img_1.jpg', 'assets/side_img_2.jpg', 'assets/side_img_3.jpg'])">
+                <div class="aspect-video mb-8 bg-[#050508] relative overflow-hidden border border-white/5">
+                    <img src="assets/main_card_preview.jpg" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-all duration-700 grayscale hover:grayscale-0">
+                    <div class="play-overlay">
+                        <div class="w-16 h-16 border border-[#8b1538] rounded-full flex items-center justify-center">
+                            <div class="w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-[#8b1538] border-b-[8px] border-b-transparent ml-1"></div>
+                        </div>
                     </div>
-                    <h3 class="font-display text-2xl tracking-wider mb-2" style="color: var(--color-bone);">
-                        ONE CANDLE AWAY
-                    </h3>
-                    <p class="text-xs tracking-[0.15em] uppercase" style="color: var(--color-mist);">
-                        PERSONAL PROJECT FROM UNITY
-                    </p>
-                    <div class="flex gap-2 flex-wrap"><span class="text-xs px-3 py-1 border" style="border-color: var(--color-blood); color: var(--color-blood);">Game Design</span> <span class="text-xs px-3 py-1 border" style="border-color: var(--color-mist); color: var(--color-mist);">Level Design</span>
                 </div>
-
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-12">
-                </div><!-- Project 2 -->
-      <div class="project-card reveal p-6 border" style="background: var(--color-shadow); border-color: rgba(74, 74, 90, 0.3);">
-       <div class="aspect-video mb-6 flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, #0f0f18 0%, #1a1a24 100%);">
-        <svg class="w-24 h-24 opacity-30" viewbox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.5"><rect x="20" y="20" width="60" height="60" style="stroke: var(--color-mist);" /> <circle cx="50" cy="50" r="30" style="stroke: var(--color-blood);" /> <path d="M30 70 Q50 30 70 70" style="stroke: var(--color-bone);" />
-        </svg>
-       </div>
-       <h3 class="font-display text-xl tracking-wider mb-2" style="color: var(--color-bone);">ONCE UPON THE TIME</h3>
-       <p class="text-sm mb-4" style="color: var(--color-mist);">2.5D horror game • Unity</p>
-       <div class="flex gap-2 flex-wrap"><span class="text-xs px-3 py-1 border" style="border-color: var(--color-blood); color: var(--color-blood);">Level Design</span> <span class="text-xs px-3 py-1 border" style="border-color: var(--color-mist); color: var(--color-mist);">3D Modeler</span> <span class="text-xs px-3 py-1 border" style="border-color: var(--color-mist); color: var(--color-mist);">Animator</span> <span class="text-xs px-3 py-1 border" style="border-color: var(--color-mist); color: var(--color-mist);">Game Designer</span>
-       </div>
-        </section>
-       </div>
-        </section>
-       </div>
-        </section>
-        
-        <section id="about" class="py-32 px-6 relative">
-    <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 0%, rgba(26, 26, 36, 0.5) 50%, transparent 100%);"></div>
-    <div class="max-w-4xl mx-auto relative z-10">
-     <div class="grid md:grid-cols-2 gap-16 items-center">
-      <div class="reveal">
-       <div class="aspect-square relative flex items-center justify-center" style="background: var(--color-shadow);">
-        <svg class="w-32 h-32 opacity-50" viewbox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.3"><circle cx="50" cy="35" r="20" style="stroke: var(--color-bone);" /> <path d="M20 90 Q50 60 80 90" style="stroke: var(--color-bone);" /> <circle cx="50" cy="50" r="45" style="stroke: var(--color-blood);" />
-        </svg>
-        <div class="absolute inset-0 border" style="border-color: rgba(139, 21, 56, 0.3);"></div>
-       </div>
-      </div>
-      <div class="reveal">
-       <div class="text-sm tracking-[0.3em] uppercase mb-4" style="color: var(--color-blood);">
-        ◈ About ◈
-       </div>
-       <h2 class="font-display text-3xl md:text-4xl tracking-wider mb-6" style="color: var(--color-bone);">ABOUT ME</h2>
-       <p id="about-text" class="text-lg leading-relaxed mb-6" style="color: var(--color-mist);">Skilled in building immersive experiences using Unity. Combines technical coding proficiency with artistic skills in high-fidelity 3D sculpting and character design.</p>
-       <div class="space-y-4">
-        <div class="flex items-center gap-4"><span class="text-sm tracking-wider" style="color: var(--color-blood);">⬡</span> <span style="color: var(--color-bone);">Unreal Engine 5 / Unity</span>
-        </div>
-        <div class="flex items-center gap-4"><span class="text-sm tracking-wider" style="color: var(--color-blood);">⬡</span> <span style="color: var(--color-bone);">Blender / Maya / ZBrush / Nomad</span>
-        </div>
-        <div class="flex items-center gap-4"><span class="text-sm tracking-wider" style="color: var(--color-blood);">⬡</span> <span style="color: var(--color-bone);">Substance Painter / Photoshop / Procreate</span>
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-        <section id="contact" class="py-32 px-6 text-center reveal">
-            <h2 class="font-display text-4xl mb-6">CONTACT</h2>
-            <div class="flex flex-col items-center space-y-4">
-                <a href="mailto:emilio25qx@gmail.com" class="text-xl font-display text-[#e8e4dc] border-b border-[#8b1538] hover:text-[#8b1538] transition-colors">
-                    EMAIL : emilio25qx@gmail.com
-                </a>
-                <a href="tel:+66616624252" class="text-xl font-display text-[#e8e4dc] border-b border-[#8b1538] hover:text-[#8b1538] transition-colors">
-                    TEL : +66 616624252
-                </a>
+                <h3 class="font-display text-2xl mb-2 tracking-widest text-[#e8e4dc]">ONE CANDLE AWAY</h3>
+                <p class="text-[10px] tracking-[0.2em] text-[#8b1538] uppercase">Personal Project From Unity</p>
             </div>
-        </section>
+
+            <div class="project-card reveal p-8" 
+                 onclick="openModal('ONCE UPON THE TIME', 'Exploring narrative through environmental storytelling in a 2.5D space.', 'https://youtu.be/6PjZ5Q7vH8Y', ['assets/horror_side_1.jpg', 'assets/horror_side_2.jpg'])">
+                <div class="aspect-video mb-8 bg-[#050508] relative overflow-hidden border border-white/5">
+                    <img src="assets/horror_preview.jpg" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-all duration-700 grayscale hover:grayscale-0">
+                    <div class="play-overlay">
+                        <div class="w-16 h-16 border border-[#8b1538] rounded-full flex items-center justify-center">
+                            <div class="w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-[#8b1538] border-b-[8px] border-b-transparent ml-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="font-display text-2xl mb-2 tracking-widest text-[#e8e4dc]">ONCE UPON THE TIME</h3>
+                <p class="text-[10px] tracking-[0.2em] text-[#8b1538] uppercase">2.5D Horror Game</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="about" class="py-32 px-6 relative z-10">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <div class="aspect-[3/4] max-w-sm mx-auto bg-[#0a0a0f] border border-[#8b1538]/40 p-2 shadow-2xl relative">
+                    <div class="absolute inset-0 bg-[#8b1538] blur-2xl opacity-10"></div>
+                    <img src="assets/your_profile.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 relative z-10">
+                </div>
+            </div>
+            <div class="reveal">
+                <h2 class="font-display text-4xl mb-8 uppercase tracking-[0.2em] text-[#e8e4dc]">About Me</h2>
+                <p class="text-lg text-[#888] leading-relaxed mb-8">Skilled in building immersive experiences using Unity. Combines technical coding proficiency with artistic skills in high-fidelity 3D sculpting and character design.</p>
+                <div class="space-y-4 text-sm text-[#e8e4dc]/60">
+                    <p class="flex items-center"><span class="text-[#8b1538] mr-4 text-lg">⬡</span> Unreal Engine 5 / Unity</p>
+                    <p class="flex items-center"><span class="text-[#8b1538] mr-4 text-lg">⬡</span> Blender / Maya / ZBrush / Nomad</p>
+                    <p class="flex items-center"><span class="text-[#8b1538] mr-4 text-lg">⬡</span> Substance Painter / Photoshop</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 px-6 text-center reveal relative z-10">
+        <h2 class="font-display text-4xl mb-12 tracking-[0.3em] text-[#e8e4dc]">CONTACT</h2>
+        <div class="flex flex-col gap-8">
+            <a href="mailto:emilio25qx@gmail.com" class="text-xl md:text-2xl text-[#888] hover:text-white transition-colors inline-block mx-auto border-b border-transparent hover:border-[#8b1538] pb-1">EMAIL : emilio25qx@gmail.com</a>
+            <a href="tel:+66616624252" class="text-xl md:text-2xl text-[#888] hover:text-white transition-colors inline-block mx-auto border-b border-transparent hover:border-[#8b1538] pb-1">PHONE : +66 61 662 4252</a>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-[10px] uppercase tracking-[0.5em] text-[#4a4a5a] relative z-10">
+        © 2026 · Crafted in the Shadows
+    </footer>
+
+    <div id="modal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-6 text-5xl text-white/30 hover:text-[#8b1538] transition-colors z-[130]">&times;</button>
+            
+            <div class="flex flex-col">
+                <div class="flex flex-col lg:flex-row w-full bg-black border-b border-[#8b1538]/20">
+                    <div class="lg:w-2/3 aspect-video border-r border-[#8b1538]/20">
+                        <iframe id="modal-video" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div id="modal-gallery" class="lg:w-1/3 flex flex-col gap-4 p-4 overflow-y-auto bg-[#050508] max-h-[300px] lg:max-h-full">
+                        </div>
+                </div>
+
+                <div class="w-full p-10 md:p-16 bg-[#0a0a0f]">
+                    <div class="max-w-5xl mx-auto">
+                        <h2 id="modal-title" class="font-display text-4xl md:text-5xl mb-8 tracking-wider text-[#e8e4dc]"></h2>
+                        <p id="modal-desc" class="text-lg text-[#888] leading-relaxed italic"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
+        function openModal(title, desc, videoId, imageList) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            
+            const vFrame = document.getElementById('modal-video');
+            vFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+            const gallery = document.getElementById('modal-gallery');
+            gallery.innerHTML = '';
+            imageList.forEach(src => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "bg-[#0a0a0f] p-2 border border-[#8b1538]/20";
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = "w-full aspect-video object-cover grayscale hover:grayscale-0 transition-all cursor-pointer";
+                wrapper.appendChild(img);
+                gallery.appendChild(wrapper);
             });
-        });
+
+            document.getElementById('modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('modal-video').src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        const obs = new IntersectionObserver((es) => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')), {threshold: 0.1});
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     </script>
 </body>
 </html>

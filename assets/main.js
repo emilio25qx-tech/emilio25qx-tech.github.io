@@ -54,6 +54,46 @@ function closeLb(){
   lbImg.src = "";
 }
 
+function openModal(title, desc, mediaType, mediaSource, tags) {
+    const videoEl = document.getElementById('modal-video');
+    const imageEl = document.getElementById('modal-image');
+    const tagsContainer = document.getElementById('modal-tags');
+
+    // Set Text Content
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-desc').innerText = desc;
+
+    // Handle Media Display
+    if (mediaType === 'video') {
+        videoEl.src = `https://www.youtube.com/embed/${mediaSource}?autoplay=1`;
+        videoEl.classList.remove('hidden');
+        imageEl.classList.add('hidden');
+    } else {
+        imageEl.src = mediaSource;
+        imageEl.classList.remove('hidden');
+        videoEl.classList.add('hidden');
+        videoEl.src = ''; 
+    }
+
+    // Handle Tags
+    tagsContainer.innerHTML = '';
+    tags.split(',').forEach(tag => {
+        const span = document.createElement('span');
+        span.className = "text-[10px] px-2 py-1 border border-[#4a4a5a] text-[#4a4a5a] uppercase";
+        span.innerText = tag.trim();
+        tagsContainer.appendChild(span);
+    });
+
+    document.getElementById('modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Stop background scrolling
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+    document.getElementById('modal-video').src = '';
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
+}
+
 pages.forEach((el) => {
   el.addEventListener("click", () => {
     const img = el.querySelector("img");
