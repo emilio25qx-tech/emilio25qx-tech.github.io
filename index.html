@@ -112,47 +112,39 @@
         </section>
 
         <section id="work" class="py-32 px-6 max-w-6xl mx-auto">
-            <h2 class="text-center font-display text-4xl mb-20 reveal flicker">GAME DESIGN</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="project-card reveal p-6">
-                    <div class="aspect-video mb-6 bg-black/40 flex items-center justify-center">
-                        <span class="text-[#8b1538] text-4xl">◈</span>
+            <h2 class="text-center font-display text-4xl mb-20 reveal flicker tracking-[0.2em]">GAME DESIGN</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <div class="project-card reveal p-8 border" style="background: #16161f; border-color: rgba(74, 74, 90, 0.2);">
+                    <div class="aspect-video mb-8 flex items-center justify-center relative overflow-hidden" style="background: #0d0d12;">
+                        <div class="w-6 h-6 border-2 border-[#8b1538] rotate-45"></div>
                     </div>
-                    <h3 class="font-display text-xl mb-2">ONE CANDLE AWAY</h3>
-                    <p class="text-sm text-[#4a4a5a] mb-4">PERSONAL PROJECT FROM UNITY</p>
+                    <h3 class="font-display text-2xl tracking-wider mb-2" style="color: var(--color-bone);">
+                        ONE CANDLE AWAY
+                    </h3>
+                    <p class="text-xs tracking-[0.15em] uppercase" style="color: var(--color-mist);">
+                        PERSONAL PROJECT FROM UNITY
+                    </p>
                 </div>
+
                 </div>
         </section>
 
-            <section id="work" class="py-32 px-6">
-    <div class="max-w-6xl mx-auto">
-        <h2 class="text-center font-display text-4xl mb-20 reveal flicker tracking-[0.2em]" style="color: var(--color-bone);">
-            GAME DESIGN
-        </h2>
-
-                <div class="grid md:grid-cols-2 gap-12">
-                    
-                    <div class="project-card reveal p-8 border" style="background: #16161f; border-color: rgba(74, 74, 90, 0.2);">
-                        <div class="aspect-video mb-8 flex items-center justify-center relative overflow-hidden" style="background: #0d0d12;">
-                            <div class="w-6 h-6 border-2 border-[#8b1538] rotate-45"></div>
-                            
-                            </div>
-
-                        <h3 class="font-display text-2xl tracking-wider mb-2" style="color: var(--color-bone);">
-                            ONE CANDLE AWAY
-                        </h3>
-                        <p class="text-xs tracking-[0.15em] uppercase" style="color: var(--color-mist);">
-                            PERSONAL PROJECT FROM UNITY
-                        </p>
-                    </div>
-
-                    </div>
+        <section id="contact" class="py-32 px-6 text-center reveal">
+            <h2 class="font-display text-4xl mb-6">Let's Create</h2>
+            <div class="flex flex-col items-center space-y-4">
+                <a href="mailto:hello@example.com" class="text-xl font-display text-[#e8e4dc] border-b border-[#8b1538] hover:text-[#8b1538] transition-colors">
+                    hello@example.com
+                </a>
+                <a href="tel:+123456789" class="text-xl font-display text-[#e8e4dc] border-b border-[#8b1538] hover:text-[#8b1538] transition-colors">
+                    +123 456 789
+                </a>
             </div>
         </section>
     </div>
 
     <script>
-        // Scroll Reveal Script
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -161,11 +153,13 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
     </script>
