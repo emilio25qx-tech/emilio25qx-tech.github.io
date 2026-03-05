@@ -1,100 +1,154 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jinjariya Songprakhon — Portfolio</title>
-  <meta name="description" content="Portfolio — Behance-style scroll" />
-  <link rel="stylesheet" href="assets/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Portfolio | My Work</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-void: #0a0a0f;
+            --color-shadow: #1a1a24;
+            --color-bone: #e8e4dc;
+            --color-blood: #8b1538;
+            --color-mist: #4a4a5a;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--color-void);
+            color: var(--color-bone);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Cinzel', serif; }
+
+        /* Eerie fog effect */
+        .fog-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(74, 74, 90, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(74, 74, 90, 0.1) 0%, transparent 40%);
+            animation: fogDrift 20s ease-in-out infinite;
+        }
+
+        @keyframes fogDrift {
+            0%, 100% { opacity: 0.7; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(-20px); }
+        }
+
+        /* Flickering effect */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; } 93% { opacity: 0.8; } 94% { opacity: 1; }
+        }
+        .flicker { animation: flicker 8s infinite; }
+
+        /* Project Card Hover */
+        .project-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--color-shadow);
+            border: 1px solid rgba(74, 74, 90, 0.3);
+        }
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(139, 21, 56, 0.2);
+        }
+
+        /* Reveal on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        .glitch:hover { animation: glitch 0.3s infinite; }
+    </style>
 </head>
+<body class="h-full">
+    <div class="fog-layer"></div>
 
-<body>
-  <!-- Minimal top bar -->
-  <header class="topbar">
-    <div class="topbar__inner">
-      <div class="brand">
-        <span class="brand__mark">JS</span>
-        <div class="brand__text">
-          <div class="brand__name">Jinjariya Songprakhon</div>
-          <div class="brand__role">Game Designer / 3D Modeler</div>
-        </div>
-      </div>
+    <div class="relative z-10 w-full h-full overflow-auto">
+        <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 backdrop-blur-md bg-[#0a0a0f]/80">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <div class="font-display text-lg tracking-widest glitch text-[#8b1538]">⛧ PORTFOLIO</div>
+                <div class="flex gap-8">
+                    <a href="#work" class="text-sm uppercase text-[#4a4a5a] hover:text-white transition-colors">Work</a>
+                    <a href="#about" class="text-sm uppercase text-[#4a4a5a] hover:text-white transition-colors">About</a>
+                    <a href="#contact" class="text-sm uppercase text-[#4a4a5a] hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+        </nav>
 
-      <div class="actions">
-        <a class="btn btn--ghost" href="assets/pdf/PORTFOLIO.pdf" target="_blank" rel="noreferrer">Open PDF</a>
-        <a class="btn" href="assets/pdf/PORTFOLIO.pdf" download>Download</a>
-      </div>
+        <section class="min-h-screen flex items-center justify-center px-6 text-center">
+            <div>
+                <div class="mb-4 text-sm tracking-[0.3em] uppercase text-[#4a4a5a]">Welcome to the void</div>
+                <h1 class="font-display text-5xl md:text-8xl tracking-wider mb-6 flicker text-[#e8e4dc]">A B C</h1>
+                <p class="text-xl italic mb-12 text-[#4a4a5a]">Game Designer & 3D Modeler</p>
+                <a href="#work" class="inline-block px-8 py-3 border border-[#8b1538] text-[#8b1538] font-display text-sm tracking-wider uppercase hover:bg-[#8b1538] hover:text-white transition-all">
+                    Enter the Gallery
+                </a>
+            </div>
+        </section>
+
+        <section id="work" class="py-32 px-6 max-w-6xl mx-auto">
+            <h2 class="text-center font-display text-4xl mb-20 reveal flicker">PORTFOLIO</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="project-card reveal p-6">
+                    <div class="aspect-video mb-6 bg-black/40 flex items-center justify-center">
+                        <span class="text-[#8b1538] text-4xl">◈</span>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">HOLLOW DEPTHS</h3>
+                    <p class="text-sm text-[#4a4a5a] mb-4">Unreal Engine 5 Horror Environment</p>
+                </div>
+                </div>
+        </section>
+
+        <section id="contact" class="py-32 px-6 text-center reveal">
+            <h2 class="font-display text-4xl mb-6">Summon Me</h2>
+            <a href="mailto:hello@example.com" class="text-2xl font-display text-[#e8e4dc] border-b border-[#8b1538] hover:text-[#8b1538] transition-colors">
+                hello@yourname.com
+            </a>
+        </section>
     </div>
-  </header>
 
-  <!-- Floating progress -->
-  <div class="progress" aria-label="Scroll progress">
-    <div class="progress__bar" id="progressBar"></div>
-    <div class="progress__label" id="progressLabel">1 / 11</div>
-  </div>
+    <script>
+        // Scroll Reveal Script
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
 
-  <!-- Scroll container -->
-  <main class="feed" id="feed">
-    <!-- Optional intro block (short, Behance-like) -->
-    <section class="intro">
-      <div class="intro__inner">
-        <h1>Portfolio 2026</h1>
-        <p>
-          Scroll to view the full portfolio as a continuous presentation.
-          Click any page to open it full-size.
-        </p>
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        <div class="intro__meta">
-          <a href="mailto:emilio25qx@gmail.com">emilio25qx@gmail.com</a>
-          <span class="dot">•</span>
-          <a href="tel:+66616624252">+66 61 662 4252</a>
-          <span class="dot">•</span>
-          <span>Thai (Native) • English (C1)</span>
-        </div>
-
-        <div class="intro__toggle">
-          <label class="switch">
-            <input type="checkbox" id="snapToggle" checked />
-            <span class="switch__ui"></span>
-          </label>
-          <span class="muted">Snap scroll (page-by-page feel)</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pages -->
-    <section class="page" data-page="1"><img src="assets/pages/page-01.png" alt="Portfolio page 1" loading="lazy"></section>
-    <section class="page" data-page="2"><img src="assets/pages/page-02.png" alt="Portfolio page 2" loading="lazy"></section>
-    <section class="page" data-page="3"><img src="assets/pages/page-03.png" alt="Portfolio page 3" loading="lazy"></section>
-    <section class="page" data-page="4"><img src="assets/pages/page-04.png" alt="Portfolio page 4" loading="lazy"></section>
-    <section class="page" data-page="5"><img src="assets/pages/page-05.png" alt="Portfolio page 5" loading="lazy"></section>
-    <section class="page" data-page="6"><img src="assets/pages/page-06.png" alt="Portfolio page 6" loading="lazy"></section>
-    <section class="page" data-page="7"><img src="assets/pages/page-07.png" alt="Portfolio page 7" loading="lazy"></section>
-    <section class="page" data-page="8"><img src="assets/pages/page-08.png" alt="Portfolio page 8" loading="lazy"></section>
-    <section class="page" data-page="9"><img src="assets/pages/page-09.png" alt="Portfolio page 9" loading="lazy"></section>
-    <section class="page" data-page="10"><img src="assets/pages/page-10.png" alt="Portfolio page 10" loading="lazy"></section>
-    <section class="page" data-page="11"><img src="assets/pages/page-11.png" alt="Portfolio page 11" loading="lazy"></section>
-
-    <footer class="end">
-      <div class="end__inner">
-        <div class="end__title">That’s the full deck.</div>
-        <div class="end__actions">
-          <a class="btn btn--ghost" href="#feed">Back to top</a>
-          <a class="btn" href="assets/pdf/PORTFOLIO.pdf" target="_blank" rel="noreferrer">Open PDF</a>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lbClose" id="lbClose" aria-label="Close">✕</button>
-    <div class="lbInner">
-      <img id="lbImg" alt="Full page preview" />
-      <div class="lbHint" id="lbHint">Page</div>
-    </div>
-  </div>
-
-  <script src="assets/main.js"></script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
 </html>
